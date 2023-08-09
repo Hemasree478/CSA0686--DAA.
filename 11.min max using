@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+struct MinMax {
+    int min;
+    int max;
+    int comparisons;
+};
+
+struct MinMax findMinMax(int arr[], int left, int right) {
+    struct MinMax result, leftMinMax, rightMinMax;
+    result.comparisons = 0;
+    
+    if (left == right) {
+        result.min = arr[left];
+        result.max = arr[left];
+        return result;
+    }
+    
+    int mid = left + (right - left) / 2;
+    leftMinMax = findMinMax(arr, left, mid);
+    rightMinMax = findMinMax(arr, mid + 1, right);
+    result.comparisons = leftMinMax.comparisons + rightMinMax.comparisons;
+    
+    if (leftMinMax.min < rightMinMax.min) {
+        result.min = leftMinMax.min;
+    } else {
+        result.min = rightMinMax.min;
+    }
+    
+    if (leftMinMax.max > rightMinMax.max) {
+        result.max = leftMinMax.max;
+    } else {
+        result.max = rightMinMax.max;
+    }
+    
+    result.comparisons += 2; // Two additional comparisons in this step
+    
+    return result;
+}
+
+int main() {
+    int arrA[] = {23, 45, 6, 8, -9, 44, 7, 8};
+    int sizeA = sizeof(arrA) / sizeof(arrA[0]);
+    
+    struct MinMax resultA = findMinMax(arrA, 0, sizeA - 1);
+    
+    printf("Minimum value: %d\n", resultA.min);
+    printf("Maximum value: %d\n", resultA.max);
+    printf("Comparisons: %d\n", resultA.comparisons);
+    
+    int arrB[] = {8, -5, 7, 2, 6, 0, 1, 9};
+    int sizeB = sizeof(arrB) / sizeof(arrB[0]);
+    
+    struct MinMax resultB = findMinMax(arrB, 0, sizeB - 1);
+    
+    printf("Minimum value: %d\n", resultB.min);
+    printf("Maximum value: %d\n", resultB.max);
+    printf("Comparisons: %d\n", resultB.comparisons);
+    
+    int arrC[] = {45, 'y', 9, 8, 4, 7, 11, 22, 16};
+    int sizeC = sizeof(arrC) / sizeof(arrC[0]);
+    
+    struct MinMax resultC = findMinMax(arrC, 0, sizeC - 1);
+    
+    if (resultC.min == -1 && resultC.max == -1) {
+        printf("Illegal input\n");
+    }
+    
+    return 0;
+}
