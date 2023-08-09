@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+int linearSearch(int arr[], int size, int key) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == key) {
+            return i; // Element found at index i
+        }
+    }
+    return -1; // Element not found
+}
+
+int main() {
+    int A[] = {56, 89, 7, 13, 75, 23, 8, 12};
+    int sizeA = sizeof(A) / sizeof(A[0]);
+    int keyA = 75;
+
+    int B[] = {89, 45, -23, 45, 0, 44, 2};
+    int sizeB = sizeof(B) / sizeof(B[0]);
+    int keyB = 0;
+
+    int C[] = {45, 67, 56, 'A', 34, -2, 100};
+    int sizeC = sizeof(C) / sizeof(C[0]);
+    int keyC = 90;
+
+    int resultA = linearSearch(A, sizeA, keyA);
+    if (resultA != -1) {
+        printf("Element %d found in position %d of array A\n", keyA, resultA);
+    } else {
+        printf("Element %d not found in array A\n", keyA);
+    }
+
+    int resultB = linearSearch(B, sizeB, keyB);
+    if (resultB != -1) {
+        printf("Element %d found in position %d of array B\n", keyB, resultB);
+    } else {
+        printf("Element %d not found in array B\n", keyB);
+    }
+
+    int resultC = linearSearch(C, sizeC, keyC);
+    if (resultC != -1) {
+        printf("Element %d found in position %d of array C\n", keyC, resultC);
+    } else {
+        printf("Element %d not found in array C\n", keyC);
+    }
+
+    return 0;
+}
