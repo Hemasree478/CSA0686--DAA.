@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+void sortArray(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {-12, -78, -35, -42, -85};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    
+    int M = 3; // Mth maximum number
+    int N = 3; // Nth minimum number
+    
+    if (M <= 0 || N <= 0 || M > size || N > size) {
+        printf("Illegal input\n");
+        return 0;
+    }
+    
+    sortArray(arr, size);
+    
+    int MthMax = arr[size - M];
+    int NthMin = arr[N - 1];
+    
+    int sum = MthMax + NthMin;
+    int diff = MthMax - NthMin;
+    
+    printf("Sum: %d\n", sum);
+    printf("Difference: %d\n", diff);
+    
+    return 0;
+}
