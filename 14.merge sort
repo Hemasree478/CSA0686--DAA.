@@ -1,0 +1,83 @@
+#include <stdio.h>
+
+void merge(int arr[], int left, int mid, int right) {
+    int sizeLeft = mid - left + 1;
+    int sizeRight = right - mid;
+    
+    int tempLeft[sizeLeft];
+    int tempRight[sizeRight];
+    
+    for (int i = 0; i < sizeLeft; i++) {
+        tempLeft[i] = arr[left + i];
+    }
+    
+    for (int i = 0; i < sizeRight; i++) {
+        tempRight[i] = arr[mid + 1 + i];
+    }
+    
+    int i = 0, j = 0, k = left;
+    
+    while (i < sizeLeft && j < sizeRight) {
+        if (tempLeft[i] >= tempRight[j]) {
+            arr[k] = tempLeft[i];
+            i++;
+        } else {
+            arr[k] = tempRight[j];
+            j++;
+        }
+        k++;
+    }
+    
+    while (i < sizeLeft) {
+        arr[k] = tempLeft[i];
+        i++;
+        k++;
+    }
+    
+    while (j < sizeRight) {
+        arr[k] = tempRight[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int A[] = {3, 8, 1, 9};
+    int sizeA = sizeof(A) / sizeof(A[0]);
+    
+    int B[] = {4, -2, 0, 7};
+    int sizeB = sizeof(B) / sizeof(B[0]);
+    
+    int merged[sizeA + sizeB];
+    
+    for (int i = 0; i < sizeA; i++) {
+        merged[i] = A[i];
+    }
+    
+    for (int i = 0; i < sizeB; i++) {
+        merged[sizeA + i] = B[i];
+    }
+    
+    mergeSort(merged, 0, sizeA + sizeB - 1);
+    
+    printf("Merged and Sorted Array: ");
+    printArray(merged, sizeA + sizeB);
+    
+    return 0;
+}
