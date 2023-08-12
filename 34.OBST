@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <limits.h>
+
+int optimalBST(int keys[], int freq[], int n) {
+    int dp[n + 1][n + 1];
+
+    for (int i = 0; i <= n; i++)
+        dp[i][i] = freq[i];
+
+    for (int len = 2; len <= n; len++) {
+        for (int i = 0; i <= n - len + 1; i++) {
+            int j = i + len - 1;
+            dp[i][j] = INT_MAX;
+
+            for (int r = i; r <= j; r++) {
+                int cost = ((r > i) ? dp[i][r - 1] : 0) +
+                           ((r < j) ? dp[r + 1][j] : 0) +
+                           freq[r];
+
+                if (cost < dp[i][j])
+                    dp[i][j] = cost;
+            }
+        }
+    }
+
+    return dp[0][n - 1];
+}
+
+int main() {
+    int n;
+
+    printf("Enter the number of keys: ");
+    scanf("%d", &n);
+
+    int keys[n], freq[n];
+
+    printf("Enter %d keys:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &keys[i]);
+    }
+
+    printf("Enter frequencies for %d keys:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &freq[i]);
+    }
+
+    int optimalCost = optimalBST(keys, freq, n);
+    printf("Optimal cost of searching: %d\n", optimalCost);
+
+    return 0;
+}
